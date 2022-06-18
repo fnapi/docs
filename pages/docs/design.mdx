@@ -38,7 +38,7 @@ But it's still possible to create a client for this api, and even, **we can use 
 In other words, you can call it from client, and it will work.
 Yeah, this **identical api part requires a black magic, but the benefit of the black magic is complete eliminatation of boilerplates**.
 
-## Black magic
+## The first magic: Perfect IDE experience
 
 Our goal is providing an identical api for the client, so you, the user of FnApi can call a remote function just like a local asynchornous function.
 Let's change the above example a bit.
@@ -56,7 +56,17 @@ export default class ProductApi {
 
 We exported it from the module as a default export.
 
-So... IDE will show `ProductApi` in autocompletion, and if you select it, it will import `fnapi/product.js`.
-If you are experienced js developer, you may get it.
+So... IDE will show `ProductApi` in autocompletion, and if you select it, you can do `ProductApi.searchProducts(query)`.
+Instead of what?
+Sending an _untyped_ http request to the server.
+Also with perfect autocompletion of the IDE.
 
-Also, you can do `ProductApi.searchProducts(query)`, instead of sending an untyped http request, with perfect autocompletion of the IDE.
+How does it work?
+We provide various plugins for each bundlers.
+`import` of FnApi api file will be automatically replaced with an asynchornous, generated client.
+
+This is the first magic.
+But we have to handle session, right?
+This is where the second magic kicks in.
+
+## The second magic: Identical api
