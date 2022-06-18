@@ -1,1 +1,15 @@
 # How it works
+
+FnApi depends on static analysis of the API files.
+
+The idea is that, the input / output of an api is statically analyzable in almost all cases.
+Actually, this is widely accepted idea.
+While calling one api, you expect the sucesssful output to have similar form - i.e. same type - as without such garuntee rest api become too hard to use.
+
+We can use this fact to eliminate the all boilerplates.
+The boilerplates includes communication via protocols like http, serialization, deserialization, session management and many more.
+Combined with expressiveness of TypeScript type system, we can create the concept of inputs and outputs.
+
+##
+
+## Tricks
