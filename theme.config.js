@@ -22,7 +22,7 @@ export default {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta
         name="description"
-        content="FnApi: A function is enough"
+        content="FnApi: the backend framework from future"
       />
       <meta
         name="og:title"
