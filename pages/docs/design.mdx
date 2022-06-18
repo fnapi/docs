@@ -69,4 +69,39 @@ This is the first magic.
 But we have to handle session, right?
 This is where the second magic kicks in.
 
-## The second magic: Identical api
+## The second magic: Identical API
+
+Where should we get the session from?
+JWT token?
+If so client can pass it each time, but as we are talking about a way to support other usecases while eliminating boilerplates, so let's say, it's a cookie-based session.
+
+Clearly, client cannot pass it.
+If it can, you are doing something wrong.
+And if the api has `session: Session` in its paramteres, editor experience will not be good enough, because `tsc` wants user to fill `session` field.
+Instead of adding paramters, we can use another magic here.
+
+```ts
+// fnapi/product.ts
+
+import { Context } from "@fnapi/api";
+
+export default class ProductApi {
+  static async searchProducts(query: string): Promise<Product[]> {
+    const session = Context.get<Session>();
+    return await dbQuery();
+  }
+}
+```
+
+You can see that we are using `Context` to get the session.
+If you are experienced TypeScript developer, you may got shocked.
+
+> How is it possible?
+
+> > TypeScript generics in runtime?
+
+But this question overlooks one too important thing.
+You can process typescript files before stripping types out.
+Yeah, this is definitely not a common approach.
+But there's nothing holding us from this.
+This api is much more stable than apis based on legacy, stage 2, decorators.
