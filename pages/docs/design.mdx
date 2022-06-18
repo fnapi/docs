@@ -4,12 +4,33 @@ FnApi depends on static analysis of the API files.
 
 The idea is that, the input / output of an api is statically analyzable in almost all cases.
 Actually, this is widely accepted idea.
-While calling one api, you expect the sucesssful output to have similar form - i.e. same type - as without such garuntee rest api become too hard to use.
+While calling one api, you expect the sucesssful output to have a same type - although it can be a union - as without such garuntee api become too hard to use.
 
 We can use this fact to eliminate the all boilerplates.
-The boilerplates includes communication via protocols like http, serialization, deserialization, session management and many more.
-Combined with expressiveness of TypeScript type system, we can create the concept of inputs and outputs.
+The boilerplates includes communications via protocols like http, serialization, deserialization, session management and many more.
+Combined with expressiveness of TypeScript type system, we can represent all requirements of an api using a method.
 
-##
+## Magic
 
-## Tricks
+Let's take a look at the following example:
+
+```ts
+class ProductApi {
+  async searchProducts(session: Sesssion, query: string): Promise<Product[]> {
+    return await dbQuery();
+  }
+}
+```
+
+Clearly, we can see that the input of this method is a session and a query.
+The output is a promise of a list of products.
+
+But problem of calling this is the fact that this is an instance method of a class exists on server.
+To call it, we used to create rest / graphql api endpoints and call this method from the endpoint.
+
+But why?
+We can automate this.
+After all, we know all inputs, and outputs.
+Using this part, we can generate a client for this api.
+
+## Black magic
