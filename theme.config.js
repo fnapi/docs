@@ -14,7 +14,7 @@ export default {
   logo: (
     <>
       <svg>...</svg>
-      <span>A function is an api</span>
+      <span>A function is enough</span>
     </>
   ),
   head: (
