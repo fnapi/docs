@@ -47,8 +47,16 @@ Let's change the above example a bit.
 // fnapi/product.ts
 
 export default class ProductApi {
-  async searchProducts(session: Sesssion, query: string): Promise<Product[]> {
+  static async searchProducts(query: string): Promise<Product[]> {
+    // We need a way to get session
     return await dbQuery();
   }
 }
 ```
+
+We exported it from the module as a default export.
+
+So... IDE will show `ProductApi` in autocompletion, and if you select it, it will import `fnapi/product.js`.
+If you are experienced js developer, you may get it.
+
+Also, you can do `ProductApi.searchProducts(query)`, instead of sending an untyped http request, with perfect autocompletion of the IDE.
