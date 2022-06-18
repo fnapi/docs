@@ -39,3 +39,16 @@ In other words, you can call it from client, and it will work.
 Yeah, this **identical api part requires a black magic, but the benefit of the black magic is complete eliminatation of boilerplates**.
 
 ## Black magic
+
+Our goal is providing an identical api for the client, so you, the user of FnApi can call a remote function just like a local asynchornous function.
+Let's change the above example a bit.
+
+```ts
+// fnapi/product.ts
+
+export default class ProductApi {
+  async searchProducts(session: Sesssion, query: string): Promise<Product[]> {
+    return await dbQuery();
+  }
+}
+```
