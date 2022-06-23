@@ -14,7 +14,7 @@ export default {
   logo: (
     <>
       <svg>...</svg>
-      <span>A function is an api</span>
+      <span>A function is enough</span>
     </>
   ),
   head: (
@@ -26,7 +26,7 @@ export default {
       />
       <meta
         name="og:title"
-        content="FnApi: the backend framework from future"
+        content="FnApi: A function is enough"
       />
     </>
   ),
