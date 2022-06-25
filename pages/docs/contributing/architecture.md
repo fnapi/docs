@@ -1,3 +1,7 @@
+---
+title: Architecture
+---
+
 # How does it work
 
 The compiler analyzes input file, looking for `export default class`.
