@@ -5,6 +5,9 @@
   "design": {
     "title": "The Design"
   },
+  "api": {
+    "title": "API"
+  },
   "contributing": {
     "title": "Contributing"
   }
