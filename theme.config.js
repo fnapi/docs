@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 export default {
   github: "https://github.com/fnapi/docs", // GitHub link in the navbar
-  projectLink: "https://github.com/fnapi/docs", // GitHub link in the navbar
+  projectLink: "https://github.com/fnapi/fnapi", // GitHub link in the navbar
   docsRepositoryBase: "https://github.com/fnapi/docs", // base URL for the docs repository
   titleSuffix: " – FnApi",
   nextLinks: true,
