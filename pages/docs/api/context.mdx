@@ -6,3 +6,52 @@ title: The context api
 
 With `fnapu`, you can easily define functnios.
 But for perfect IDE experience, we use native syntax for declaring functnios and import them using original import path.
+
+But this has a problem.
+See the code below.
+
+```ts
+import { FnApi } from "@fnapi/api";
+
+export default class TodoApi {
+  @FnApi
+  static async list() {
+    // We need DB
+  }
+}
+```
+
+We cannot add paramters, because if so typescript intellisense will try to fill the arguments.
+So we need a way to provide a db connection to `list` method above, without adding them to paramter nor class fields, also for intellisense.
+
+---
+
+We use quite novel approach for this problem.
+See the code below.
+
+```ts
+import { FnApi, Context } from "@fnapi/api";
+import { Db } from "./your-db";
+
+export default class TodoApi {
+  @FnApi
+  static async list() {
+    // We need DB
+    const db = Context.get<Db>();
+  }
+}
+```
+
+If you are an experienced typescript developer, you may got shocked.
+`<Db>` part of `Context.get<Db>()` should be compiled as `Context::get()`, right?
+No.
+It's how `tsc` compiles your code.
+`fnapi` has some compiler passes to allow finding those types in runtime.
+
+## Limits
+
+- `Context::get()` is not allowed. You have to specify full type.
+
+- Currently `Context::get` only supports classes
+
+(Maybe fixed in future)
