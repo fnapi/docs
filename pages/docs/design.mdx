@@ -8,11 +8,11 @@ FnApi depends on static analysis of the API files.
 
 The idea is that, the input / output of an api is statically analyzable in almost all cases.
 Actually, this is widely accepted idea.
-While calling one api, you expect the sucesssful output to have a same type - although it can be a union - as without such garuntee api become too hard to use.
+While calling one api, you expect the successful output to have a same type - although it can be a union - as without such guarantee api become too hard to use.
 
-We can use this fact to eliminate the all boilerplates.
-The boilerplates includes communications via protocols like http, serialization, deserialization, session management and many more.
-Combined with expressiveness of TypeScript type system, we can represent all requirements of an api using a method.
+We can use this fact to eliminate all of the boilerplate.
+The boilerplate includes communications via protocols like HTTP, serialization, deserialization, session management and many more.
+Combined with expressiveness of TypeScript type system, we can represent all requirements of an API using a method.
 
 ## Example
 
@@ -20,7 +20,7 @@ Let's take a look at the following example:
 
 ```ts
 class ProductApi {
-  async searchProducts(session: Sesssion, query: string): Promise<Product[]> {
+  async searchProducts(session: Session, query: string): Promise<Product[]> {
     return await dbQuery();
   }
 }
@@ -30,21 +30,21 @@ Clearly, we can see that the input of this method is a session and a query.
 The output is a promise of a list of products.
 
 But problem of calling this is the fact that this is an instance method of a class exists on server.
-To call it, we used to create rest / graphql api endpoints and call this method from the endpoint.
+To call it, we used to create REST / GraphQL API endpoints and call this method from the endpoint.
 
 **But why?**
-This boilerplates are **not** necessary.
+This boilerplate is **not** necessary.
 After all, we **know all inputs, and outputs**.
 Using this part, we can generate a client for this api.
 
-Of course, there's session and database conncetion. Also it requires an instance of `ProductApi`.
-But it's still possible to create a client for this api, and even, **we can use identical api for the client!**.
+Of course, there's session and database connection. Also it requires an instance of `ProductApi`.
+But it's still possible to create a client for this API, and even, **we can use identical API for the client!**.
 In other words, you can call it from client, and it will work.
-Yeah, this **identical api part requires a magic, but the benefit of the magic is complete eliminatation of boilerplates**.
+Yeah, this **identical API part requires a little magic, but the benefit of the magic is complete elimination of boilerplate**.
 
 ## The first magic: Perfect IDE experience
 
-Our goal is providing an identical api for the client, so you, the user of FnApi can call a remote function just like a local asynchornous function.
+Our goal is providing an identical API for the client, so you, the user of FnApi can call a remote function just like a local asynchronous function.
 Let's change the above example a bit.
 
 ```ts
@@ -62,12 +62,12 @@ We exported it from the module as a default export.
 
 So... IDE will show `ProductApi` in autocompletion, and if you select it, you can do `ProductApi.searchProducts(query)`.
 Instead of what?
-Sending an _untyped_ http request to the server.
+Sending an _untyped_ HTTP request to the server.
 Also with perfect autocompletion of the IDE.
 
 How does it work?
 We provide various plugins for each bundlers.
-`import` of FnApi api file will be automatically replaced with an asynchornous, generated client.
+`import` of FnApi api file will be automatically replaced with an asynchronous, generated client.
 
 This is the first magic.
 But we have to handle session, right?
@@ -77,12 +77,12 @@ This is where the second magic kicks in.
 
 Where should we get the session from?
 JWT token?
-If so client can pass it each time, but as we are talking about a way to support other usecases while eliminating boilerplates, so let's say, it's a cookie-based session.
+If so client can pass it each time, but as we are talking about a way to support other use-cases while eliminating boilerplate, so let's say, it's a cookie-based session.
 
 Clearly, client cannot pass it.
 If it can, you are doing something wrong.
-And if the api has `session: Session` in its paramteres, editor experience will not be good enough, because `tsc` wants user to fill `session` field.
-Instead of adding paramters, we can use another magic here.
+And if the api has `session: Session` in its parameters, editor experience will not be good enough, because `tsc` wants user to fill `session` field.
+Instead of adding parameters, we can use some magic here.
 
 ```ts
 // fnapi/product.ts
@@ -104,8 +104,8 @@ If you are experienced TypeScript developer, you may got shocked.
 
 > > TypeScript generics in runtime?
 
-But this question overlooks one too important thing.
+But this question overlooks one very important thing.
 You can process typescript files before stripping types out.
 Yeah, this is definitely not a common approach.
 But there's nothing holding us from this.
-This api is much more stable than apis based on legacy, stage 2, decorators.
+This API is much more stable than APIs based on legacy, stage 2, decorators.
