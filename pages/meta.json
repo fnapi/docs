@@ -1,8 +1,15 @@
 {
   "index": {
     "title": "Introduction",
-    "type": "nav",
-    "hidden": true
+    "type": "page",
+    "hidden": true,
+    "theme": {
+      "sidebar": false,
+      "toc": false,
+      "footer": true,
+      "pagination": true,
+      "breadcrumb": false
+    }
   },
   "docs": {
     "title": "Docs",
