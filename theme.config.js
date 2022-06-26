@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
+
 export default {
-  github: "https://github.com/fnapi/fnapi", // GitHub link in the navbar
   projectLink: "https://github.com/fnapi/fnapi", // GitHub link in the navbar
   docsRepositoryBase: "https://github.com/fnapi/docs", // base URL for the docs repository
   titleSuffix: " – FnApi",
@@ -14,7 +14,12 @@ export default {
   footerEditLink: `Edit this page on GitHub`,
   logo: (
     <>
-      <svg>...</svg>
+      <img
+        src="/logo.svg"
+        width="20"
+        alt="FnApi"
+        style={{ marginRight: "10px" }}
+      />
       <span>A function is enough</span>
     </>
   ),
@@ -25,10 +30,7 @@ export default {
         name="description"
         content="FnApi: the backend framework from future"
       />
-      <meta
-        name="og:title"
-        content="FnApi: A function is enough"
-      />
+      <meta name="og:title" content="FnApi: A function is enough" />
     </>
   ),
 };

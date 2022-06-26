@@ -1,3 +1,3 @@
-# docs
+# FnApi Docs
 
-Source code for https://docs.fnapi.dev
+Source code for https://fnapi.dev
