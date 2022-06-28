@@ -4,8 +4,8 @@ title: The context api
 
 ## The context api
 
-With `fnapi`, you can easily define functnios.
-But for perfect IDE experience, we use native syntax for declaring functnios and import them using original import path.
+With `fnapi`, you can easily define functions.
+But for perfect IDE experience, we use native syntax for declaring functions and import them using original import path.
 
 But this has a problem.
 See the code below.
@@ -21,8 +21,8 @@ export default class TodoApi {
 }
 ```
 
-We cannot add paramters, because if so typescript intellisense will try to fill the arguments.
-So we need a way to provide a db connection to `list` method above, without adding them to paramter nor class fields, also for intellisense.
+We cannot add parameters, because if so typescript intellisense will try to fill the arguments.
+So we need a way to provide a db connection to `list` method above, without adding them to parameter nor class fields, also for IntelliSense.
 
 ---
 
@@ -51,6 +51,7 @@ const DbProvider = provide(async (req, res) => {
 ```
 
 This is a bit tricky, because `Context.get` is a static method call, which is processed by the compiler.
+
 
 ## Providing instances of types
 
