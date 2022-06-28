@@ -2,7 +2,7 @@
 title: The context api
 ---
 
-# The context api
+## The context api
 
 With `fnapi`, you can easily define functnios.
 But for perfect IDE experience, we use native syntax for declaring functnios and import them using original import path.
@@ -15,7 +15,7 @@ import { FnApi } from "@fnapi/api";
 
 export default class TodoApi {
   @FnApi
-  static async list() {
+  static async list(): Promise<TodoItem[]> {
     // We need DB
   }
 }
@@ -30,14 +30,22 @@ We use quite novel approach for this problem.
 See the code below.
 
 ```ts
-import { FnApi, Context } from "@fnapi/api";
+import { FnApi, Context, provide } from "@fnapi/api";
 import { Db } from "./your-db";
+
+/**
+ * Type: Provider<Db>
+ */
+const DbProvider = provide(async (req, res) => {
+  // get connection from somewhere
+  return new Db();
+});
 
 export default class TodoApi {
   @FnApi
-  static async list() {
+  static async list(): Promise<TodoItem[]> {
     // We need DB
-    const db = Context.get<Db>();
+    const db = Context.get(DbProvider);
   }
 }
 ```
@@ -47,6 +55,8 @@ If you are an experienced typescript developer, you may got shocked.
 No.
 It's how `tsc` compiles your code.
 `fnapi` has some compiler passes to allow finding those types in runtime.
+
+## Providing instances of types
 
 ## Limits
 
