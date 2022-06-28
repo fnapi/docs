@@ -2,7 +2,7 @@
 title: The context api
 ---
 
-# The context api
+## The context api
 
 With `fnapi`, you can easily define functions.
 But for perfect IDE experience, we use native syntax for declaring functions and import them using original import path.
@@ -15,7 +15,7 @@ import { FnApi } from "@fnapi/api";
 
 export default class TodoApi {
   @FnApi
-  static async list() {
+  static async list(): Promise<TodoItem[]> {
     // We need DB
   }
 }
@@ -30,28 +30,42 @@ We use quite novel approach for this problem.
 See the code below.
 
 ```ts
-import { FnApi, Context } from "@fnapi/api";
+import { FnApi, Context, provide } from "@fnapi/api";
 import { Db } from "./your-db";
 
 export default class TodoApi {
   @FnApi
-  static async list() {
+  static async list(): Promise<TodoItem[]> {
     // We need DB
-    const db = Context.get<Db>();
+    const db = Context.get(DbProvider);
   }
 }
+
+/**
+ * Type: Provider<Db>
+ */
+const DbProvider = provide(async (req, res) => {
+  // get connection from somewhere
+  return new Db();
+});
 ```
 
-If you are an experienced TypeScript developer, you may got shocked.
-`<Db>` part of `Context.get<Db>()` should be compiled as `Context::get()`, right?
-No.
-It's how `tsc` compiles your code.
-`fnapi` has some compiler passes to allow finding those types in runtime.
+This is a bit tricky, because `Context.get` is a static method call, which is processed by the compiler.
 
-## Limits
 
-- `Context::get()` is not allowed. You have to specify full type.
+## Providing instances of types
 
-- Currently `Context::get` only supports classes
+You can use `provide` to create a provider.
 
-(Maybe fixed in future)
+```ts
+import { provide } from "@fnapi/api";
+import { Db } from "./your-db";
+
+/**
+ * Type: Provider<Db>
+ */
+const DbProvider = provide(async (req, res) => {
+  // get connection from somewhere
+  return new Db();
+});
+```
