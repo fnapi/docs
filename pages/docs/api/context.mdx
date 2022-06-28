@@ -33,14 +33,6 @@ See the code below.
 import { FnApi, Context, provide } from "@fnapi/api";
 import { Db } from "./your-db";
 
-/**
- * Type: Provider<Db>
- */
-const DbProvider = provide(async (req, res) => {
-  // get connection from somewhere
-  return new Db();
-});
-
 export default class TodoApi {
   @FnApi
   static async list(): Promise<TodoItem[]> {
@@ -48,20 +40,31 @@ export default class TodoApi {
     const db = Context.get(DbProvider);
   }
 }
+
+/**
+ * Type: Provider<Db>
+ */
+const DbProvider = provide(async (req, res) => {
+  // get connection from somewhere
+  return new Db();
+});
 ```
 
-If you are an experienced typescript developer, you may got shocked.
-`<Db>` part of `Context.get<Db>()` should be compiled as `Context::get()`, right?
-No.
-It's how `tsc` compiles your code.
-`fnapi` has some compiler passes to allow finding those types in runtime.
+This is a bit tricky, because `Context.get` is a static method call, which is processed by the compiler.
 
 ## Providing instances of types
 
-## Limits
+You can use `provide` to create a provider.
 
-- `Context::get()` is not allowed. You have to specify full type.
+```ts
+import { provide } from "@fnapi/api";
+import { Db } from "./your-db";
 
-- Currently `Context::get` only supports classes
-
-(Maybe fixed in future)
+/**
+ * Type: Provider<Db>
+ */
+const DbProvider = provide(async (req, res) => {
+  // get connection from somewhere
+  return new Db();
+});
+```
